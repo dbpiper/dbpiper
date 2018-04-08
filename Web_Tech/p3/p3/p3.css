@@ -1,0 +1,59 @@
+/*
+  Filename: p3.css
+  Author: David Piper
+  Description:
+    This file handles the styling for project 3.
+*/
+
+/* some variables to make the dance animation a bit more modular/easier to change */
+:root {
+  --danceAngle: 25deg;
+  --negDanceAngle: -25deg; /* css doesn't like haveing -var(--danceAngle) */
+}
+
+h1 {
+  font-size: 1.4rem;
+}
+
+@keyframes dance
+{
+  0% {
+    left: 0;
+  }
+  10% {
+    transform: rotate(var(--danceAngle));
+  }
+  40% {
+    transform: rotate(var(--negDanceAngle));
+  }
+  70% {
+    transform: rotate(var(--danceAngle));
+  }
+  100% {
+    left: 85%;
+  }
+}
+
+#logoBorder {
+  border: 2px solid black;
+  width: 150px;
+  /* top | right | bottom | left */
+  margin: 40px 20px 40px 20px;
+  animation: dance 2s;
+  animation-iteration-count: 2;
+  position: relative;
+}
+
+#logo {
+  text-align: center;
+  margin: 10px;
+  padding-top: 55.8px;
+  padding-bottom: 55.8px;
+  background-color: #EE622F;
+  color: white;
+}
+
+#messageForm > div, #clearStorageDiv {
+  /* top | right | bottom | left */
+  margin: 12px 5px 12px 5px;
+}

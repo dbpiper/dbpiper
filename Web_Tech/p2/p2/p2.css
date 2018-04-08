@@ -1,0 +1,139 @@
+/*
+  Filename: p2.css
+  Author: David Piper
+  Description:
+    This file handles the styling for the SPA app for project 2.
+*/
+
+/*
+  use css variables which is a Candidate Recommendation for CSS
+  and is supported in: Chrome, Edge, Firefox, Opera, and Safari.
+*/
+:root {
+  --assetHeight: 25%; /* default uncollapsed height */
+  --borderColor: black;
+  --gapSize: 3px;
+  --hierarchyWidth: 15%; /* default uncollapsed width */
+  --inspectorWidth: 15%; /* default uncollapsed width */
+  --sidebarWidth: 6.67022%;
+}
+
+html, body {
+  /* make the content take entire screen
+     except for some margins to match the
+     assignment image
+  */
+  height: 100%;
+}
+
+.wrap {
+  background-color: var(--borderColor);
+  border: var(--gapSize) solid var(--borderColor);
+  display: grid;
+  grid-gap: var(--gapSize);
+  grid-template-areas: "sidebar hierarchy build inspector"
+                       "sidebar hierarchy assets inspector";
+  /*
+     using calc instead of auto for - build/assets column
+     to make sure all width is used
+     to account for the fixed pixel column-gaps
+
+     this calculation must be used as auto does not scale properly
+  */
+  grid-template-columns: var(--sidebarWidth) var(--hierarchyWidth)
+    calc(100% - (3*var(--gapSize) + var(--sidebarWidth)
+      + var(--hierarchyWidth) + var(--inspectorWidth)) )
+    var(--inspectorWidth);
+  /* use this calculation instead of 75% for the build row to account for the
+     fixed pixel row-gap
+
+     this calculation must be used as auto does not scale properly
+  */
+  grid-template-rows: calc(100% - (var(--assetHeight) + var(--gapSize)) )
+    var(--assetHeight);
+  height: 90%;
+  width:  100%;
+}
+
+.grid-content {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.grid-content > div {
+  display: inline;
+}
+
+.grid-content > div.rotated-div {
+  display: block;
+}
+
+.grid-content > div > div {
+  display: inline-block;
+}
+
+
+#sidebar {
+  overflow: hidden;
+}
+
+#sidebar > img {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+
+
+.collapse-btn {
+    background-image: url(./images/collapse_btn.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    outline: none;
+}
+
+/*
+  Uses tranform rotate which is a Working Draft and supported by
+  all major browsers, with browser specific versions.
+*/
+.horizontal-collapse {
+    -moz-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    -ms-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    -o-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    -webkit-transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    display: block;
+    margin-top: 90px;
+    position: absolute;
+}
+
+#sidebar {
+  background-color: #FF1513;
+  grid-area: sidebar;
+}
+
+#hierarchy {
+  background-color: #FAEBD8;
+  grid-area: hierarchy;
+}
+
+#build {
+  background-color: #ADD8E6;
+  grid-area: build;
+}
+
+#assets {
+  background-color: #90EE90;
+  grid-area: assets;
+}
+
+#inspector {
+  background-color: #FFFE03;
+  grid-area: inspector;
+}
