@@ -85,13 +85,37 @@ var P5 = (function() {
     pi_p.style.display = 'block';
   }
 
-
-  // plays the gunshot sound
+    
   function playGunshotSound() {
       const sourceNode = audioContext.createBufferSource();
       sourceNode.buffer = audioBuffer;
       sourceNode.connect(audioContext.destination);
       sourceNode.start(0);
+  }
+
+  // plays the gunshot sound
+  function loadAndPlayGunshotSound() {
+    if (!audioBuffer) {
+        audioContext = new AudioContext();
+
+        const fileUrl = 'resources/sounds/gunshot.wav';
+        const request = new XMLHttpRequest();
+        const fireBtn = document.getElementById('fire_btn');
+
+        request.responseType = 'arraybuffer';
+        request.addEventListener('load', function() {
+            if (request.status == 0 || request.status == 200) {
+              audioContext.decodeAudioData(request.response, function(buffer) {
+                  audioBuffer = buffer;
+                  playGunshotSound();
+              });
+            }
+        });
+        request.open('GET', fileUrl, true);
+        request.send();
+    } else {
+        playGunshotSound();
+    }
   }
 
   // reset the module's global variables each time this is called
@@ -105,33 +129,33 @@ var P5 = (function() {
     context = null;
   }
 
-  // load the sound file
-  window.addEventListener('load', function() {
-    audioContext = new AudioContext();
+  //// load the sound file
+  //window.addEventListener('load', function() {
+    //audioContext = new AudioContext();
 
-    const fileUrl = 'resources/sounds/gunshot.wav';
-    const request = new XMLHttpRequest();
-    const fireBtn = document.getElementById('fire_btn');
+    //const fileUrl = 'resources/sounds/gunshot.wav';
+    //const request = new XMLHttpRequest();
+    //const fireBtn = document.getElementById('fire_btn');
 
-    request.responseType = 'arraybuffer';
-    request.addEventListener('load', function() {
-      if (request.status == 0 || request.status == 200) {
-        audioContext.decodeAudioData(request.response, function(buffer) {
-          audioBuffer = buffer;
-          fireBtn.disabled = false;
-        });
-      }
-    });
-    request.open('GET', fileUrl, true);
-    request.send();
-  });
+    //request.responseType = 'arraybuffer';
+    //request.addEventListener('load', function() {
+      //if (request.status == 0 || request.status == 200) {
+        //audioContext.decodeAudioData(request.response, function(buffer) {
+          //audioBuffer = buffer;
+          //fireBtn.disabled = false;
+        //});
+      //}
+    //});
+    //request.open('GET', fileUrl, true);
+    //request.send();
+  //});
 
 
   // the exported variables/functions from this module: namely fire function
   return {
     fire: function() {
       resetVariables();
-      playGunshotSound();
+      loadAndPlayGunshotSound();
       setCanvasSize();
       drawObjects();
       setPiApproxmationText();
