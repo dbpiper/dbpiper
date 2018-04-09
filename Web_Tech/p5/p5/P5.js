@@ -12,6 +12,13 @@ var P5 = (function() {
   const backgroundColor = '#FF0000'; // red background
   const boardColor = '#00FF00'; // green board
   const dartRadius = 5;
+  
+  // new versions of Chrome, Firefox and Opera use window.AudioContext
+  // old versions of Chrome and all versions of Safari use window.webkitAudioContext
+  // Internet Explorer doesn't support either
+  const AudioContext = window.AudioContext
+    || window.webkitAudioContext
+    || false;
 
   // module global variables
   let numDartsOnBoard = 0;
